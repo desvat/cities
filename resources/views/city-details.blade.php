@@ -6,7 +6,7 @@
 
     <main class="city-details">
         
-        <div class="container ">
+        <div class="container">
 
 
 

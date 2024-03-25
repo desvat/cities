@@ -417,6 +417,54 @@ main {
     }
   }
 
+  &.all-locations {
+    border-top: 1px solid $colorFooterBG;
+    background-color: #ffffff;
+
+    .container {
+      padding: 50px 0 50px 0;
+      gap: 50px;
+
+      .group {
+        min-width: 400px;
+        display: flex;
+        flex-direction: column;
+        padding-right: calc(var(--bs-gutter-x)* 0.5);
+        padding-left: calc(var(--bs-gutter-x)* 0.5);
+      }
+
+      h4 {
+        margin: 40px 0 0 0;
+        font-weight: 800;
+        text-transform: uppercase;
+        color: $colorPrimary;
+        &:first-child {
+          margin: 0;
+        }
+      }
+      h5 {
+        font-size: 1.25rem;
+        font-weight: 500;
+        margin: 20px 0 10px 0;
+        color: $colorSecondary;
+      }
+      h6 {
+        font-weight: 300;
+        margin: 0 0 5px 0;
+        color: #949494;
+        b {
+          font-weight: 500;
+          color: #4b4b4b;
+        }
+      }
+
+
+
+
+
+    }
+  }
+
   &.city-details {
     border-top: 1px solid $colorFooterBG;
     background-color: #ffffff;

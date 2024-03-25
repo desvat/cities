@@ -6,6 +6,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\CityController;
 
+use App\Http\Controllers\LocationsController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -32,8 +34,12 @@ Route::get('/city/{id}', function ($id) {
 
 
 
+// Route::get('/print', function () {
+//     $locations = Location::all();
+//     return view('print', ['locations' => $locations]);
+// });
 
-
+Route::get('/locations', [LocationsController::class, 'index'])->name('locations');
 
 
 

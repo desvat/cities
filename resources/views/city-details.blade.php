@@ -1,4 +1,4 @@
-@extends('head')
+@include('head')
 
 @section('title', 'Detaily mesta')
 
@@ -8,14 +8,9 @@
         
         <div class="container">
 
-
-
             <h1>Detaily obce - {{ $id }}</h1>
 
-
-
             <div class="row">
-
 
                 <div class="col-md-6 col-info">
                 
@@ -50,22 +45,14 @@
 
                 </div>
 
-
                 <div class="col-md-6 col-erb">
                 <img src="{{ asset('assets/img/krupina.png') }}" alt="">
                     <h2><a href="#" title="">Krupina</a></h2>
                 </div>
 
-
             </div>
 
-
-
         </div>
-
-
-
-
 
     </main>
 

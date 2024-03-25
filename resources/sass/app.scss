@@ -455,12 +455,19 @@ main {
         b {
           font-weight: 500;
           color: #4b4b4b;
+          -webkit-transition: all 500ms ease-out;
+          -moz-transition: all 500ms ease-out;
+          -ms-transition: all 500ms ease-out;
+          -o-transition: all 500ms ease-out;
+          transition: all 500ms ease-out;
         }
       }
 
-
-
-
+      a:hover {
+        b {
+        color: $colorPrimaryDark;
+        }
+      }
 
     }
   }

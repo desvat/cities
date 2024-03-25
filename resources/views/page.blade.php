@@ -1,4 +1,4 @@
-@extends('head')
+@include('head')
 
 @section('title', 'Error 404')
 

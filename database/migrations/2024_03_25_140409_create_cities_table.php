@@ -15,6 +15,8 @@ return new class extends Migration
 
             $table->bigIncrements('city_id');
   
+            $table->enum('city_type', ['kraj', 'okres', 'mesto', 'obec']); 
+
             $table->string('city_name')->unique();
             $table->string('city_mayor');
             $table->string('city_address');
@@ -22,6 +24,11 @@ return new class extends Migration
             $table->text('city_fax')->nullable();
             $table->text('city_email')->nullable();
             $table->string('city_web')->nullable();
+            $table->string('city_crest_img');
+
+            $table->unsignedBigInteger('city_parent_id')->nullable(); // ID nadradenej lokality
+        
+            $table->foreign('city_parent_id')->references('city_id')->on('cities');
 
             $table->timestamps();
             $table->unique('city_id');

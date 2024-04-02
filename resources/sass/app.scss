@@ -400,7 +400,6 @@ header {
 
       .search-result-wrapper {
         position: relative;
-
         display: none;
 
         .search-result-wrapper-inner {
@@ -409,20 +408,34 @@ header {
           left: 0;
           right: 0;
           margin: auto;
-          padding: 10px 15px;
+          padding: 10px 10px;
           display: flex;
           flex-direction: column;
           border-radius: $border-radius;
           background-color: rgb(236, 236, 236);
+
+          .search-result-item {
+            margin: 0 0 1px 0;
+
+            a {
+              width: 100%;
+              display: block;
+              color: #696969;
+              padding: 5px 10px;
+              border-radius: $border-radius;
+              background-color: #e1e1e1;
+
+              &:hover {
+                color: #ffffff;
+                background-color: $colorPrimaryDark;
+              }
+            }
+
+          }
+
         }
 
-
-
-
       }
-
-
-
 
     }
 
@@ -525,8 +538,6 @@ main {
         border-radius: 4px;
         box-shadow: 0 0 10px #00000014;
 
-
-
         .col-info {
           padding: 50px;
           color: #515151;
@@ -571,16 +582,11 @@ main {
           }
         }
 
-
       }
 
     }
 
-
-
   }
-
-
 
 }
 

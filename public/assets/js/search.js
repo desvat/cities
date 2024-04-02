@@ -1,13 +1,11 @@
-$(document).ready(function() {
   $('#search-input').on('keyup', function() {
       var query = $(this).val();
 
       console.log("Query: " + query);
 
-      if (query.length >= 1) {
 
           $.ajax({
-              url: "{{ route('search.cities') }}",
+              url: "{{ route('city') }}",
               method: 'GET',
               data: {
                   query: query,
@@ -23,7 +21,6 @@ $(document).ready(function() {
                   console.error("AJAX Error:", status, error); // Kontrola chybových stavov
               }
           });
-      }
+
       
   });
-});

@@ -13,7 +13,7 @@
             </div>
 
             <div class="row ">
-                <input type="text" class="search-input" placeholder="Zadajte názov...">
+                <input type="text" id="search-input" class="search-input" placeholder="Zadajte názov...">
             </div>
 
         </div>

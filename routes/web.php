@@ -29,32 +29,16 @@ Route::get('/welcome', function () {
     return view('welcome');
 });
 
-Route::get('/city/{id}', function ($id) {
-    return view('city-details', ['id' => $id]);
-})->name('city.show');
+// Route::get('/city/{id}', function ($id) {
+//     return view('city-details', ['id' => $id]);
+// })->name('city.show');
 
-
-
-// Route::get('/print', function () {
-//     $locations = Location::all();
-//     return view('print', ['locations' => $locations]);
-// });
+Route::get('/city/{id}', [CityController::class, 'showDetail'])->name('city.showDetail');
 
 Route::get('/locations', [LocationsController::class, 'index'])->name('locations');
-
-
 
 Route::get('/user/{id}', [UserController::class, 'show'])->name('user.show');
 
 Route::get('/page', [PageController::class, 'showPage'])->name('page');
-
-Route::controller(PostController::class)->group(function(){
-    Route::get('/posts', 'index')->name('posts.index');
-    Route::post('/posts', 'store')->name('posts.store');
-});
-
-// Route::get('/posts', [PostController::class, 'index'])->name('page');
-// Route::post('posts', [PostController::class, 'store'])->name('posts.store');
-
 
 Route::get('/city-search', [CityController::class, 'searchByName'])->name('city-search');

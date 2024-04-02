@@ -522,13 +522,20 @@ main {
     background-color: #ffffff;
 
     .container {
-      padding: 50px 0 50px 0;
+      padding: 75px 0 75px 0;
 
       h1 {
         text-align: center;
         font-size: 2rem;
         font-weight: 200;
-        margin: 0 0 50px 0;
+        margin: 0 0 75px 0;
+        color: #8b8b8b;
+
+        strong {
+          font-weight: 800;
+          color: #0064f7;
+          text-transform: uppercase;
+        }
       }
 
       &>.row {
@@ -548,7 +555,7 @@ main {
               margin: 0;
             }
             a {
-              color: #0064f7;
+              color: #000000;
               &:hover {
                 color: $colorSecondary;
               }

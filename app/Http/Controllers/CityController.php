@@ -25,4 +25,18 @@ class CityController extends Controller
 
     }
 
+    public function showDetail(Request $request, $id) {
+    
+        $city = City::where('city_id', $id)
+                    ->whereNotIn('city_type', ['kraj', 'okres'])
+                    ->first();
+    
+        if (!$city) {
+            return view('city-details')->with('message', 'Záznam s ID ' . $id . ' nebol nájdený');
+        }
+    
+        return view('city-details', compact('city'));
+    }
+
+
 }

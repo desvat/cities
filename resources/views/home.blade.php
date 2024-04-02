@@ -17,11 +17,6 @@
 
                 <div class="search-result-wrapper" id="search-result">
                     <div class="search-result-wrapper-inner" id="search-result-inner">
-                        <div class="search-result-item"><a href="" title="">Nitra</a></div>
-                        <div class="search-result-item"><a href="" title="">Levice</a></div>
-                        <div class="search-result-item"><a href="" title="">Kosice</a></div>
-                        <div class="search-result-item"><a href="" title="">Bratislava</a></div>
-                        <div class="search-result-item"><a href="" title="">Kysuce</a></div>
                     </div>
                 </div>
 

@@ -55,5 +55,5 @@
         </div>
 
     </main>
-
+    
 @include('footer')

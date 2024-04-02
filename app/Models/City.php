@@ -9,9 +9,25 @@ class City extends Model
 {
     use HasFactory;
 
+    protected $table = 'cities';
+
     protected $fillable = [
-        'city_type', 
-        'city_name'
+        'city_type',
+        'city_name',
+        'city_mayor',
+        'city_address',
+        'city_phone',
+        'city_fax',
+        'city_email',
+        'city_web',
+        'city_crest_img',
+        'city_parent_id',
     ];
+
+    // Definícia vzťahov, ak sú potrebné
+    public function parentCity()
+    {
+        return $this->belongsTo(City::class, 'city_parent_id');
+    }
 
 }

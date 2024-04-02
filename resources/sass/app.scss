@@ -373,29 +373,61 @@ header {
       color: #ffffff;
     }
 
-    .search-input {
+    .search-wrapper {
+      $border-radius: 4px;
       width: clamp(225px, 70vw, 500px);
-      border: 0;
-      padding: 10px 15px;
-      border-radius: 4px;
-      -webkit-transition: all 500ms ease-out;
-      -moz-transition: all 500ms ease-out;
-      -ms-transition: all 500ms ease-out;
-      -o-transition: all 500ms ease-out;
-      transition: all 500ms ease-out;
-      color: $colorPrimaryDark;
+      padding: 10px;
+
+      .search-input {
+        border: 0;
+        padding: 10px 15px;
+        border-radius: $border-radius;
+        color: $colorPrimaryDark;
+          -webkit-transition: all 500ms ease-out;
+          -moz-transition: all 500ms ease-out;
+          -ms-transition: all 500ms ease-out;
+          -o-transition: all 500ms ease-out;
+          transition: all 500ms ease-out;
+        &:focus {
+          color: #19679e;
+          box-shadow: 0px 0px 20px #115e95;
+          outline: 2px solid #115e95;
+        }
+        &::placeholder {
+          color: #cacaca;
+        }
+      }
+
+      .search-result-wrapper {
+        position: relative;
+
+        display: none;
+
+        .search-result-wrapper-inner {
+          position: absolute;
+          top: 10px;
+          left: 0;
+          right: 0;
+          margin: auto;
+          padding: 10px 15px;
+          display: flex;
+          flex-direction: column;
+          border-radius: $border-radius;
+          background-color: rgb(236, 236, 236);
+        }
 
 
-      &:focus {
-        color: #19679e;
-        box-shadow: 0px 0px 20px #115e95;
+
+
       }
-      &::placeholder {
-        color: #cacaca;
-      }
+
+
+
+
     }
 
   }
+
 }
 
 main {

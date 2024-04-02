@@ -57,3 +57,4 @@ Route::controller(PostController::class)->group(function(){
 // Route::post('posts', [PostController::class, 'store'])->name('posts.store');
 
 
+Route::get('/city-search', [CityController::class, 'searchByName'])->name('city-search');

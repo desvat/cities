@@ -83,7 +83,7 @@
                         <li><a href="{{ route('page') }}" title="Demo PAGE ;)">Zoznam miest</a></li>
                         <li><a href="{{ route('page') }}" title="Demo PAGE ;)">Inšpekcia</a></li>
                         <li><a href="{{ route('page') }}" title="Demo PAGE ;)">Kontakt</a></li>
-                        <li><a href="{{ route('city.show', ['id' => 1]) }}">Zobraziť detaily mesta</a></li>
+                        <li><a href="{{ route('city.show', ['id' => 1]) }}">Detail</a></li>
                         <li><a href="{{ route('locations') }}" title="Vsetky zaznamy">All</a></li>
                         <li><a href="{{ route('posts.index') }}" title="Vsetky zaznamy">posts</a></li>
                     </ul>

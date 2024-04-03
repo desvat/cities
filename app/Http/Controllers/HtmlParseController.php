@@ -5,36 +5,19 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use PHPHtmlParser\Dom;
 
+use App\Models\City;
+use App\Helpers\CityHelper;
+use App\Helpers\HtmlParserHelper;
+
 class HtmlParseController extends Controller
 {
     public function parseDistricts()
     {
 
-        $html = file_get_contents('https://www.e-obce.sk/kraj/NR.html');
-        
-        $html = preg_replace('/[;\'",:-]|-->/u', '', $html);
-        $html = preg_replace('/https\/\//', '', $html);
+        $paragraphs = HtmlParserHelper::parseLinksDistricts('https://www.e-obce.sk/kraj/NR.html');
 
-        $dom = new Dom;
-        
-        $dom->loadStr($html);
-        
-        $rows = $dom->find('a');
-        $paragraphs = [];
-        $existingLinks = [];
+        // CityHelper::insertCity('okres', 'xxx', 'xxx', 'xxx', 'xxx', 'xxx', 'xxx', 'xxx', 'xxx', 3);
 
-        foreach ($rows as $row) {
-            $href = $row->getAttribute('href');
-            if (strpos($href, 'www.eobce.sk/okres/') !== false && !in_array($href, $existingLinks)) {
-                $paragraphs[] = [
-                    'text' => $row->text,
-                    'href' => $href
-                ];
-                // Pridajte odkaz do pola existujúcich odkazov
-                $existingLinks[] = $href;
-            }
-        }
-        
         return view('district', compact('paragraphs'));
     }
 
@@ -42,68 +25,25 @@ class HtmlParseController extends Controller
     public function parseCities()
     {
 
-        $html = file_get_contents('https://www.e-obce.sk/okres/levice.html');
-        
-        $html = preg_replace('/[;\'",:-]|-->/u', '', $html);
-        $html = preg_replace('/https\/\//', '', $html);
+        $paragraphs = HtmlParserHelper::parseLinksCities('komarno', 'levice', 'nitra', 'nove_zamky', 'sala', 'topolcany', 'zlate_moravce');
 
-        $dom = new Dom;
-        
-        $dom->loadStr($html);
-        
-        $rows = $dom->find('a');
-        $paragraphs = [];
-
-        foreach ($rows as $row) {
-            $href = $row->getAttribute('href');
-            if (strpos($href, 'www.eobce.sk/obec/') !== false) {
-                if (strpos($href, '/fotky/') === false) {
-                    $paragraphs[] = [
-                        'text' => $row->text,
-                        'href' => $href
-                    ];
-                }
-            }
-        }
-        
         return view('cities', compact('paragraphs'));
 
     }
     public function parseCitiesBydistrict($disctrict)
     {
 
-        $html = file_get_contents('https://www.e-obce.sk/okres/' . $disctrict . '.html');
-        
-        $html = preg_replace('/[;\'",:-]|-->/u', '', $html);
-        $html = preg_replace('/https\/\//', '', $html);
 
-
-        $dom = new Dom;
+        $paragraphs = HtmlParserHelper::parseLinksBydistrict('https://www.e-obce.sk/okres/' . $disctrict . '.html');
         
-        $dom->loadStr($html);
-        
-        $rows = $dom->find('a');
-        $paragraphs = [];
-
-        foreach ($rows as $row) {
-            $href = $row->getAttribute('href');
-            if (strpos($href, 'www.eobce.sk/obec/') !== false) {
-                if (strpos($href, '/fotky/') === false) {
-                    $paragraphs[] = [
-                        'text' => $row->text,
-                        'href' => $href
-                    ];
-                }
-            }
-        }
-        
-        // Kontrola, či je pole $paragraphs prázdne
         if (empty($paragraphs)) {
             $message = 'Nenájdený žiadny záznam.';
             return view('cities', compact('message'));
         } else {
             return view('cities', compact('paragraphs'));
         }
+
+
 
     }
 

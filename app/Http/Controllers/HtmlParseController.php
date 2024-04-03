@@ -41,16 +41,16 @@ class HtmlParseController extends Controller
         preg_match_all('/\/([^\/]+)\.html/', json_encode($linksForDistrict), $matches);
         $allLinks = array_merge($allLinks, $matches[1]);
 
-        $limitLinks = -1; // Počet Obci, ktoré chcete vykonať analyzovať
+        $limitLinks = 5; // Počet Obci, ktoré chcete vykonať analyzovať
         foreach ($allLinks as $index => $link) {
             if ($limitLinks !== -1 && $index >= $limitLinks) {
                 break; // Ukončiť cyklus, ak sme dosiahli limit
             }
             HtmlParserHelper::parseLinksCityDetails("https://www.e-obce.sk/obec/$link/$link.html");
-        }
-        
-        return redirect('/cities');
 
+        }
+
+        return redirect('/cities');
 
     }
 

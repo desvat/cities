@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use PHPHtmlParser\Dom;
 use App\Helpers\CityHelper;
+use Illuminate\Support\Facades\Http;
 
 class HtmlParserHelper
 {
@@ -197,6 +198,15 @@ class HtmlParserHelper
             $cityName = $wordsExplode[1];
 
             CityHelper::insertCity($cityType, $cityName, $bigBoss, $cityDistrict, $cityCounty, $cityRegion, $patternAdressPCS, $phonesString, $cityFaxs, $emailString, $cityWeb, $erbName);
+
+            /* Stiahnutie obrazka */
+            $response = Http::get('https://www.e-obce.sk/erb/' . $erbName);
+
+            if ($response->successful()) {
+                $image = $response->body();
+                $file_path = public_path('assets/images/erbs/' . $erbName);
+                file_put_contents($file_path, $image);
+            } 
 
         }
 

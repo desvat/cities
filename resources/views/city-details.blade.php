@@ -120,7 +120,7 @@
                     </div>
 
                     <div class="col-md-6 col-erb">
-                        <img src="{{ asset('assets/img/krupina.png') }}" alt="Erb {{ trim($city->city_type === 'mesto' ? 'mesta' : 'obce') }} {{ $city->city_name }}">
+                        <img src="{{ asset('assets/images/erbs/' . $city->city_crest_img) }}" alt="Erb {{ trim($city->city_type === 'mesto' ? 'mesta' : 'obce') }} {{ $city->city_name }}">
                         @if(!empty($city->city_web)) <!-- Web -->
                             <h2><a href="https://{{ $city->city_web }}" title="Navštívte WEB {{ trim($city->city_type === 'mesto' ? 'mesta' : 'obce') }} {{ $city->city_name }}" target="_blank">{{ $city->city_web }}</a></h2>
                         @endif

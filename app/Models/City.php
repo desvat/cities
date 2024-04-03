@@ -26,13 +26,6 @@ class City extends Model
         'city_email',
         'city_web',
         'city_crest_img',
-        'city_parent_id',
     ];
-
-    // Definícia vzťahov, ak sú potrebné
-    // public function parentCity()
-    // {
-    //     return $this->belongsTo(City::class, 'city_parent_id');
-    // }
 
 }

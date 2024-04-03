@@ -30,26 +30,14 @@ Route::get('/welcome', function () {
     return view('welcome');
 });
 
-// Route::get('/city/{id}', function ($id) {
-//     return view('city-details', ['id' => $id]);
-// })->name('city.show');
-
 Route::get('/city/{id}', [CityController::class, 'showDetail'])->name('city.showDetail');
-
-Route::get('/locations', [LocationsController::class, 'index'])->name('locations');
-
-Route::get('/user/{id}', [UserController::class, 'show'])->name('user.show');
 
 Route::get('/page', [PageController::class, 'showPage'])->name('page');
 
 Route::get('/city-search', [CityController::class, 'searchByName'])->name('city-search');
+Route::get('/parse/{district}', [HtmlParseController::class, 'parseCitiesDetails'])->name('parse.city.details');
 
-Route::get('/parse/districts', [HtmlParseController::class, 'parseDistricts'])->name('parse.districts');
-// Route::get('/parse/cities', [HtmlParseController::class, 'parseCities'])->name('parse.cities');
-
-Route::prefix('/parse/cities')->group(function () {
-    Route::get('/', [HtmlParseController::class, 'parseCities'])->name('parse.cities');
-    Route::get('/{district}', [HtmlParseController::class, 'parseCitiesBydistrict'])->name('parse.cities.by.district');
-    Route::get('/details/{city}', [HtmlParseController::class, 'parseCitiesDetails'])->name('parse.city.details');
+Route::prefix('/cities')->group(function () {
+    Route::get('/', [HtmlParseController::class, 'showAllCities'])->name('cities');
 });
 

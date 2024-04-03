@@ -7,37 +7,9 @@ use App\Helpers\CityHelper;
 
 class HtmlParserHelper
 {
-  public static function parseLinksDistricts($url)
-  {
-    $html = file_get_contents($url);
-    $html = preg_replace('/[;\'",:-]|-->/u', '', $html);
-    $html = preg_replace('/https\/\//', '', $html);
-
-    $dom = new Dom;
-    $dom->loadStr($html);
-
-    $rows = $dom->find('a');
-    $paragraphs = [];
-    $existingLinks = [];
-
-    foreach ($rows as $row) {
-      $href = $row->getAttribute('href');
-      if (strpos($href, 'www.eobce.sk/okres/') !== false && !in_array($href, $existingLinks)) {
-        $paragraphs[] = [
-          'text' => $row->text,
-          'href' => $href
-        ];
-        // Pridajte odkaz do pola existujúcich odkazov
-        $existingLinks[] = $href;
-      }
-    }
-
-    return $paragraphs;
-  }
 
   public static function parseLinksCities(...$districts)
   {
-
 
     $paragraphs = [];
 
@@ -100,7 +72,6 @@ class HtmlParserHelper
     return $paragraphs;
   }
 
-
   public static function parseLinksCityDetails($url)
   {
     $html = file_get_contents($url);
@@ -128,20 +99,10 @@ class HtmlParserHelper
             // Hľadanie hodnôt pre Primátora
             $patternPrimator = '/<td>Primátor<\/td>\s*<td>(.*?)<\/td>/';
             preg_match($patternPrimator, $rows, $matchesPrimator);
-            if (!empty($matchesPrimator)) {
-                $paragraphs[] = [
-                    'primator' => $matchesPrimator[1]
-                ];
-            }
 
             // Hľadanie hodnôt pre Starosta
             $patternStarosta = '/<td>Starosta<\/td>\s*<td>(.*?)<\/td>/';
             preg_match($patternStarosta, $rows, $matchesStarosta);
-            if (!empty($matchesStarosta)) {
-                $paragraphs[] = [
-                    'starosta' => $matchesStarosta[1]
-                ];
-            }
 
             if (!empty($matchesPrimator)) {
               $bigBoss = $matchesPrimator[1];
@@ -150,41 +111,20 @@ class HtmlParserHelper
               $bigBoss = $matchesStarosta[1];
             }
 
-            // Hľadanie hodnôt pre Prednostu
-            // $patternPrednosta = '/<td>Prednosta<\/td>\s*<td>(.*?)<\/td>/';
-            // preg_match($patternPrednosta, $rows, $matchesPrednosta);
-            // if (!empty($matchesPrednosta)) {
-            //     $paragraphs[] = [
-            //         'prednosta' => $matchesPrednosta[1]
-            //     ];
-            // }
-
             // Hľadanie hodnôt pre Kraj
             $patternDistrict = '/<td width="167"><a[^>]*>(.*?)<\/a><\/td>/';
             preg_match($patternDistrict, $rows, $matchesDistrict);
-            if (!empty($matchesDistrict)) {
-                $paragraphs[] = [
-                    'district' => $matchesDistrict[1]
-                ];
-            }
+            $cityDistrict = isset($matchesDistrict[1]) ? $matchesDistrict[1] : '';
 
             // Hľadanie hodnôt pre Okres
             $patternCounty = '/<td>Okres<\/td>\s*<td><a[^>]*>(.*?)<\/a><\/td>/';
             preg_match($patternCounty, $rows, $matchesCounty);
-            if (!empty($matchesCounty)) {
-                $paragraphs[] = [
-                    'county' => $matchesCounty[1]
-                ];
-            }
+            $cityCounty = isset($matchesCounty[1]) ? $matchesCounty[1] : '';
 
             // Hľadanie hodnôt pre Region
             $patternRegion = '/<td>Región<\/td>\s*<td>(.*?)<\/td>/';
             preg_match($patternRegion, $rows, $matchesRegion);
-            if (!empty($matchesRegion)) {
-                $paragraphs[] = [
-                    'region' => $matchesRegion[1]
-                ];
-            }
+            $cityRegion = isset($matchesRegion[1]) ? $matchesRegion[1] : '';
 
         }
 
@@ -206,60 +146,63 @@ class HtmlParserHelper
                 }
             }
             $emailString = implode(', ', $emails);
-            $paragraphs[] = [
-                'emails' => $emailString
-            ];
 
             /* Weby */
             $patternWeb = '/<a\s[^>]*href="([^"]+)"[^>]*target="newwindow"[^>]*>(.*?)<\/a>/';
             preg_match($patternWeb, $rows, $matchesWeb);
-            $paragraphs[] = [
-                'web' => $matchesWeb[2]
-            ];
+            $cityWeb = $matchesWeb[2];
+            if (!preg_match('/^www\.[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(?:\/\S*)?$/', $cityWeb)) {
+              $cityWeb = ''; // Prazdny retazec
+            }
 
             /* Erb */
             $patternErb = '/<img\s+src="([^"]*\/erb\/[^"]+)"\s+.*\/>/';
             preg_match($patternErb, $rows, $matchesErb);
             $erbName = preg_replace('/.*\/(erb\/[^"]+)/', '$1', $matchesErb[1]);
             $erbName = str_replace('erb/', '', $erbName);
-            $paragraphs[] = [
-                'erb' => $erbName
-            ];
 
             /* Cisla */
             $patternPhones = '/(\d{3}\s*\/\s*\d{3}\s*\d{2}\s*\d{2}),.*$/';
             preg_match_all($patternPhones, $rows, $matchesPhones);
-            $paragraphs[] = [
-              'phones' => $matchesPhones[1]
-            ];
-            $phonesString = implode(', ', $matchesPhones[1]);
-
+            $phonesNumbersWithoutSpaces = array_map(function($phone) {
+              return preg_replace('/\s+/', '', $phone);
+            }, $matchesPhones[1]);
+            $phonesString = implode(', ', $phonesNumbersWithoutSpaces);
 
             /* Fax */
             $patternFaxs = '/Fax\s*<\/div>\s*<\/td>\s*<td[^>]*>(.*?)<\/td>/';
             preg_match($patternFaxs, $rows, $matchesFaxs);
-            $paragraphs[] = [
-                'faxs' => $matchesFaxs[1]
-            ];
+            $cityFaxs = $matchesFaxs;
+            $cityFaxs = '';
+            if (!empty($matchesFaxs)) {
+              preg_match_all('/\d+/', $matchesFaxs[1], $faxNumbers);
+              if (!empty($faxNumbers[0])) {
+                $cityFaxs = implode('', $faxNumbers[0]);
+              }
+            }
 
             /* Typ */
             $patternTyp = '/<h1>(.*?)<\/h1>/';
             preg_match($patternTyp, $rows, $matchesTyp);
             $wordsExplode = explode(' ', $matchesTyp[1]);
-            $paragraphs[] = [
-                'typ' => $wordsExplode[0]
-            ];
+            $cityType = $wordsExplode[0];
+
+            /* Adresa */
+            $cityName = $wordsExplode[1];
+            $patternAdressPCS = '/<td valign="top">(\d{3} \d{2}) ' . preg_quote($cityName) . '<\/td>/';
+            preg_match($patternAdressPCS, $rows, $matchesAdressPCS);
+            $patternAdressPCS = isset($matchesAdressPCS[1]) ? $matchesAdressPCS[1] : '';
+
+            /* City name */
+            $cityName = $wordsExplode[1];
+
+            CityHelper::insertCity($cityType, $cityName, $bigBoss, $cityDistrict, $cityCounty, $cityRegion, $patternAdressPCS, $phonesString, $cityFaxs, $emailString, $cityWeb, $erbName);
 
         }
 
     }
 
-
-
-
-    CityHelper::insertCity($wordsExplode[0], $wordsExplode[1], $bigBoss, $matchesDistrict[1], $matchesCounty[1], $matchesRegion[1], '4d', $phonesString, $matchesFaxs[1], $emailString, $matchesWeb[2], $erbName, 3);
-
-    return $paragraphs;
+    // return "Všetko prebehlo úspešne!";
 
   }
 

@@ -29,8 +29,7 @@ return new class extends Migration
             $table->string('city_web')->nullable();
             $table->string('city_crest_img')->nullable();
 
-            $table->unsignedBigInteger('city_parent_id')->nullable();
-        
+            // $table->unsignedBigInteger('city_parent_id')->nullable();
             // $table->foreign('city_parent_id')->references('city_id')->on('cities');
 
             $table->timestamps();

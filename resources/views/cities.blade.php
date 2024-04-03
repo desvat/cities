@@ -8,26 +8,34 @@
 
             <div class="row buttons">
                 <ul>
-                    <li><a href="/parse/cities/komarno" title="Komárno">Komárno</a></li>
-                    <li><a href="/parse/cities/levice" title="Levice">Levice</a></li>
-                    <li><a href="/parse/cities/nitra" title="Nitra">Nitra</a></li>
-                    <li><a href="/parse/cities/nove_zamky" title="Nové Zámky">Nové Zámky</a></li>
-                    <li><a href="/parse/cities/sala" title="Šaľa">Šaľa</a></li>
-                    <li><a href="/parse/cities/topolcany" title="Topoľčany">Topoľčany</a></li>
-                    <li><a href="/parse/cities/zlate_moravce" title="Zlaté Moravce">Zlaté Moravce</a></li>
+                    <li><a href="/parse/komarno" title="Komárno">Komárno</a></li>
+                    <li><a href="/parse/levice" title="Levice">Levice</a></li>
+                    <li><a href="/parse/nitra" title="Nitra">Nitra</a></li>
+                    <li><a href="/parse/nove_zamky" title="Nové Zámky">Nové Zámky</a></li>
+                    <li><a href="/parse/sala" title="Šaľa">Šaľa</a></li>
+                    <li><a href="/parse/topolcany" title="Topoľčany">Topoľčany</a></li>
+                    <li><a href="/parse/zlate_moravce" title="Zlaté Moravce">Zlaté Moravce</a></li>
                 </ul>
             </div>
 
             <div class="row list">
 
-                @if (!empty($paragraphs))
+                @if (!empty($cities))
                     <ul>
-                        @foreach ($paragraphs as $paragraph)
-                            <li><a href="https://{{ $paragraph['href'] }}" target="_blank">{{ $paragraph['text'] }}</a></li>
+                        @foreach($cities as $city)
+                            <li>
+                                <a href="/city/{{ $city['city_id'] }}" title="Zobraziť detail {{ trim($city['city_type'] === 'mesto' ? 'mesta' : 'obce') }}">
+                                    {{ htmlspecialchars_decode($city['city_name']) }}
+                                </a>
+                            </li>
                         @endforeach
                     </ul>
                 @else
+
+                <div class="msg-empty">
                     <p>{{ $message }}</p>
+                </div>
+
                 @endif
 
             </div>

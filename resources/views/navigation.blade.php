@@ -83,9 +83,7 @@
                         <li><a href="{{ route('page') }}" title="Demo PAGE ;)">Zoznam miest</a></li>
                         <li><a href="{{ route('page') }}" title="Demo PAGE ;)">Inšpekcia</a></li>
                         <li><a href="{{ route('page') }}" title="Demo PAGE ;)">Kontakt</a></li>
-                        <li><a href="{{ route('locations') }}" title="Vsetky zaznamy">All</a></li>
-                        <li><a href="{{ route('parse.districts') }}" title="Vsetky zaznamy">Okresy</a></li>
-                        <li><a href="{{ route('parse.cities') }}" title="Vsetky zaznamy">Mestá a obce</a></li>
+                        <li><a href="{{ route('cities') }}" title="Vsetky zaznamy">Mestá a obce</a></li>
                     </ul>
                 </div>
             </div>

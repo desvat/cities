@@ -11,50 +11,46 @@ use App\Helpers\HtmlParserHelper;
 
 class HtmlParseController extends Controller
 {
-    public function parseDistricts()
+
+    public function showAllCities()
     {
 
-        $paragraphs = HtmlParserHelper::parseLinksDistricts('https://www.e-obce.sk/kraj/NR.html');
+        $cities = CityHelper::getAllCityNames();
 
-        // CityHelper::insertCity('okres', 'xxx', 'xxx', 'xxx', 'xxx', 'xxx', 'xxx', 'xxx', 'xxx', 3);
+        if (empty($cities)) {
 
-        return view('district', compact('paragraphs'));
-    }
+            $message = 'Žiadne záznamy.';
 
-    public function parseCities()
-    {
-
-        $paragraphs = HtmlParserHelper::parseLinksCities('komarno', 'levice', 'nitra', 'nove_zamky', 'sala', 'topolcany', 'zlate_moravce');
-
-        return view('cities', compact('paragraphs'));
-
-    }
-
-    public function parseCitiesBydistrict($disctrict)
-    {
-
-        $paragraphs = HtmlParserHelper::parseLinksBydistrict('https://www.e-obce.sk/okres/' . $disctrict . '.html');
-
-        if (empty($paragraphs)) {
-            $message = 'Nenájdený žiadny záznam.';
             return view('cities', compact('message'));
+
         } else {
-            return view('cities', compact('paragraphs'));
+
+            return view('cities', compact('cities'));
+
         }
 
     }
 
-    public function parseCitiesDetails()
+    public function parseCitiesDetails($district)
     {
 
-        $paragraphs = HtmlParserHelper::parseLinksCityDetails('https://www.e-obce.sk/obec/levice/levice.html');
-        
-        // $html = file_get_contents('https://www.e-obce.sk/obec/levice/levice.html');
-        // $html = file_get_contents('https://www.e-obce.sk/obec/nitra/nitra.html');
-        // $html = file_get_contents('https://www.e-obce.sk/obec/vrable/vrable.html');
-        // $html = file_get_contents('https://www.e-obce.sk/obec/jarok/jarok.html');
+        $allLinks = [];
 
-        return view('city-detail-2', compact('paragraphs'));
+        $linksForDistrict = HtmlParserHelper::parseLinksBydistrict('https://www.e-obce.sk/okres/' . $district . '.html');
+            
+        preg_match_all('/\/([^\/]+)\.html/', json_encode($linksForDistrict), $matches);
+        $allLinks = array_merge($allLinks, $matches[1]);
+
+        $limitLinks = -1; // Počet Obci, ktoré chcete vykonať analyzovať
+        foreach ($allLinks as $index => $link) {
+            if ($limitLinks !== -1 && $index >= $limitLinks) {
+                break; // Ukončiť cyklus, ak sme dosiahli limit
+            }
+            HtmlParserHelper::parseLinksCityDetails("https://www.e-obce.sk/obec/$link/$link.html");
+        }
+        
+        return redirect('/cities');
+
 
     }
 

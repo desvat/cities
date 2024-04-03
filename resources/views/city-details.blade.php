@@ -21,9 +21,37 @@
 
                     <div class="col-md-6 col-info">
 
+                        @if(!empty($city->city_district)) <!-- Kraj -->
+                            <div class="row">
+                                <div class="col-md-6 bold">Kraj:</div>
+                                <div class="col-md-6">{{ $city->city_district }}</div>
+                            </div>
+                        @endif
+
+                        @if(!empty($city->city_county)) <!-- Okres -->
+                            <div class="row">
+                                <div class="col-md-6 bold">Okres:</div>
+                                <div class="col-md-6">{{ $city->city_county }}</div>
+                            </div>
+                        @endif
+
+                        @if(!empty($city->city_region)) <!-- Región -->
+                            <div class="row">
+                                <div class="col-md-6 bold">Región:</div>
+                                <div class="col-md-6">{{ $city->city_region }}</div>
+                            </div>
+                        @endif
+
                         @if(!empty($city->city_mayor)) <!-- Starosta -->
                             <div class="row">
-                                <div class="col-md-6 bold">Meno Starostu:</div>
+                                <div class="col-md-6 bold">
+                                    @if($city->city_type === 'mesto')
+                                        Primátor:
+                                    @endif
+                                    @if($city->city_type === 'obec')
+                                        Starosta:
+                                    @endif
+                                </div>
                                 <div class="col-md-6">{{ $city->city_mayor }}</div>
                             </div>
                         @endif
@@ -32,13 +60,13 @@
                             <div class="row">
                                 <div class="col-md-6 bold">
                                     @if($city->city_type === 'mesto')
-                                        Adresa mestského úradu:
+                                        Adresa mests. úradu:
                                     @endif
                                     @if($city->city_type === 'obec')
-                                        Adresa obecného úradu:
+                                        Adresa obec. úradu:
                                     @endif
-                            </div>
-                                <div class="col-md-6">{{ $city->city_address }}</div>
+                                </div>
+                                <div class="col-md-6">{{ $city->city_address }} {{ $city->city_name }}</div>
                             </div>
                         @endif
 
@@ -92,9 +120,9 @@
                     </div>
 
                     <div class="col-md-6 col-erb">
-                        <img src="{{ asset('assets/img/krupina.png') }}" alt="">
+                        <img src="{{ asset('assets/img/krupina.png') }}" alt="Erb {{ trim($city->city_type === 'mesto' ? 'mesta' : 'obce') }} {{ $city->city_name }}">
                         @if(!empty($city->city_web)) <!-- Web -->
-                            <h2><a href="https://{{ $city->city_web }}" title="" target="_blank">{{ $city->city_name }}</a></h2>
+                            <h2><a href="https://{{ $city->city_web }}" title="Navštívte WEB {{ trim($city->city_type === 'mesto' ? 'mesta' : 'obce') }} {{ $city->city_name }}" target="_blank">{{ $city->city_web }}</a></h2>
                         @endif
                     </div>
 

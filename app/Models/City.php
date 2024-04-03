@@ -17,6 +17,9 @@ class City extends Model
         'city_type',
         'city_name',
         'city_mayor',
+        'city_district',
+        'city_county',
+        'city_region',
         'city_address',
         'city_phone',
         'city_fax',
@@ -27,9 +30,9 @@ class City extends Model
     ];
 
     // Definícia vzťahov, ak sú potrebné
-    public function parentCity()
-    {
-        return $this->belongsTo(City::class, 'city_parent_id');
-    }
+    // public function parentCity()
+    // {
+    //     return $this->belongsTo(City::class, 'city_parent_id');
+    // }
 
 }

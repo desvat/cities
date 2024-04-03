@@ -13,6 +13,7 @@
     "dependencies": {
         "@popperjs/core": "^2.11.8",
         "bootstrap": "^5.3.3",
+        "cheerio": "^1.0.0-rc.12",
         "jquery": "^3.7.1",
         "sass": "^1.72.0"
     }

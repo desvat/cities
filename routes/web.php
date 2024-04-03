@@ -8,6 +8,7 @@ use App\Http\Controllers\CityController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\LocationsController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\HtmlParseController;
 
 
 /*
@@ -42,3 +43,7 @@ Route::get('/user/{id}', [UserController::class, 'show'])->name('user.show');
 Route::get('/page', [PageController::class, 'showPage'])->name('page');
 
 Route::get('/city-search', [CityController::class, 'searchByName'])->name('city-search');
+
+
+Route::get('/parse', [HtmlParseController::class, 'parseHtml'])->name('parse');
+

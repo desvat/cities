@@ -7,7 +7,22 @@ use PHPHtmlParser\Dom;
 
 class HtmlParseController extends Controller
 {
-    public function parseHtml()
+    public function parseDistricts()
+    {
+
+
+
+
+        $paragraphs[] = [
+            'text' => 'Aaa',
+            'href' => 'Bbb'
+        ];
+
+        return view('district', compact('paragraphs'));
+    }
+
+
+    public function parseCities()
     {
 
         $html = file_get_contents('https://www.e-obce.sk/okres/levice.html');
@@ -36,7 +51,11 @@ class HtmlParseController extends Controller
             }
         }
         
-        return view('welcome', compact('paragraphs'));
+        return view('cities', compact('paragraphs'));
+
+
+
 
     }
+
 }

@@ -44,6 +44,7 @@ Route::get('/page', [PageController::class, 'showPage'])->name('page');
 
 Route::get('/city-search', [CityController::class, 'searchByName'])->name('city-search');
 
+Route::get('/parse/districts', [HtmlParseController::class, 'parseDistricts'])->name('parse.districts');
+Route::get('/parse/cities', [HtmlParseController::class, 'parseCities'])->name('parse.cities');
 
-Route::get('/parse', [HtmlParseController::class, 'parseHtml'])->name('parse');
 

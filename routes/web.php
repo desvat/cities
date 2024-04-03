@@ -50,5 +50,6 @@ Route::get('/parse/districts', [HtmlParseController::class, 'parseDistricts'])->
 Route::prefix('/parse/cities')->group(function () {
     Route::get('/', [HtmlParseController::class, 'parseCities'])->name('parse.cities');
     Route::get('/{district}', [HtmlParseController::class, 'parseCitiesBydistrict'])->name('parse.cities.by.district');
+    Route::get('/details/{city}', [HtmlParseController::class, 'parseCitiesDetails'])->name('parse.city.details');
 });
 
